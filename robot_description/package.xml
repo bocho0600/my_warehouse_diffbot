@@ -1,18 +1,17 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>diffbot_description</name>
+  <name>ros2_control_demo_description</name>
   <version>0.0.0</version>
   <description>Package with URDF and description files of test robots.</description>
 
-  <maintainer email="nguyenleminh1002@gmail.com">Kelvin Le</maintainer>
-  <!-- ADD MORE MAINTAINER IF NEEDED -->
+  <maintainer email="denis@stogl.de">Denis Štogl</maintainer>
+  <maintainer email="christoph.froehlich@ait.ac.at">Christoph Fröhlich</maintainer>
 
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-<!-- RVIZ2 is not available with raspberry pi UBUNTU MATE -->
   <exec_depend>rviz2</exec_depend>
 
   <export>
