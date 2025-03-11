@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ROS2_CONTROL_DEMO_EXAMPLE_2__DIFFBOT_SYSTEM_HPP_
-#define ROS2_CONTROL_DEMO_EXAMPLE_2__DIFFBOT_SYSTEM_HPP_
+#ifndef my_diffbot__DIFFBOT_SYSTEM_HPP_
+#define my_diffbot__DIFFBOT_SYSTEM_HPP_
 
 #include <memory>
 #include <string>
@@ -30,7 +30,7 @@
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 
-namespace ros2_control_demo_example_2
+namespace my_diffbot
 {
 class DiffBotSystemHardware : public hardware_interface::SystemInterface
 {
@@ -61,6 +61,6 @@ private:
   double hw_stop_sec_;
 };
 
-}  // namespace ros2_control_demo_example_2
+}  // namespace my_diffbot
 
-#endif  // ROS2_CONTROL_DEMO_EXAMPLE_2__DIFFBOT_SYSTEM_HPP_
+#endif  // my_diffbot__DIFFBOT_SYSTEM_HPP_
