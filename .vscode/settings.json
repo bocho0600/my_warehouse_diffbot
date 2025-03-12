@@ -1,5 +1,6 @@
 {
       "files.associations": {
             "chrono": "cpp"
-      }
+      },
+      "cmake.sourceDirectory": "/home/kelvin/control_ws/src/my_warehouse_diffbot/control"
 }
