@@ -9,13 +9,13 @@ source /opt/ros/jazzy/setup.bash
 ```
 
 ## Build **diffbot** & **ros2_control_diffbot_description** Packages:
-Build everything with:
+Build everything with, continue to build if error occur:
 ```sh
 colcon build --symlink-install --continue-on-error
-``` 
+```
 Build my_diffbot package with:
 ```sh 
-build --packages-select my_diffbot
+colcon build --packages-select my_diffbot
 ``` 
 Build robot_description package with:
 ```sh 
