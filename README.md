@@ -27,13 +27,13 @@ colcon build --packages-select ros2_control_diffbot_description
 source install/setup.bash
 ```
 
-## ** This project is referenced from ros2_control example packages: **
-### * [ros2_control framework information](https://control.ros.org/jazzy/doc/ros2_control/doc/index.html)
-### * [ros2_control differential drive (``diff_drive_controller``) contorllers](https://control.ros.org/jazzy/doc/ros2_control/doc/index.html)
-### * [ros2_control differential drive example (example 2)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_2/doc/userdoc.html)
-### * [ros2_control controllers-chaining example (example 12)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_12/doc/userdoc.html)
+** This project is referenced from ros2_control example packages: **
+* [ros2_control framework information](https://control.ros.org/jazzy/doc/ros2_control/doc/index.html)
+* [ros2_control differential drive (``diff_drive_controller``) contorllers](https://control.ros.org/jazzy/doc/ros2_control/doc/index.html)
+* [ros2_control differential drive example (example 2)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_2/doc/userdoc.html)
+* [ros2_control controllers-chaining example (example 12)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_12/doc/userdoc.html)
 
-### * [ros2_control tutorials 1 (Youtube Channel)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_12/doc/userdoc.html)
+* [ros2_control tutorials 1 (Youtube Channel)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_12/doc/userdoc.html)
 
 
 
