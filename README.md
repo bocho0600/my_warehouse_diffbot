@@ -1,16 +1,28 @@
 ## To install relevants ros2_control controllers packages:
-```sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers```
+```sh
+sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers
+```
 
 ## Source ROS2 Setup file to ENABLE ROS2:
-```source /opt/ros/jazzy/setup.bash```
+```sh
+source /opt/ros/jazzy/setup.bash
+```
 
 ## Build **diffbot** & **ros2_control_diffbot_description** Packages:
-```colcon build --symlink-install --continue-on-error``` 
-```colcon build --packages-select my_diffbot``` 
-```colcon build --packages-select ros2_control_diffbot_description``` 
+```sh
+colcon build --symlink-install --continue-on-error
+``` 
+```sh 
+build --packages-select my_diffbot
+``` 
+```sh 
+colcon build --packages-select ros2_control_diffbot_description
+``` 
 
 ## Source & update environment for packages:
-```source install/setup.bash```
+``` sh
+source install/setup.bash
+```
 
 ## ** This project is referenced from ros2_control example packages: **
 ### * [ros2_control framework information](https://control.ros.org/jazzy/doc/ros2_control/doc/index.html)
@@ -43,18 +55,18 @@ Refer to the [run_from_docker](../../doc/run_from_docker.rst) guide.
 To check if the **DiffBot** description is working properly, use the following launch command:
 
 ```sh
-ros2 launch ros2_control_demo_example_2 view_robot.launch.py
+ros2 launch my_diffbot view_robot.launch.py
 ```
 
 > **Warning:** If you see the message: `Warning: Invalid frame ID "odom" passed to canTransform argument target_frame - frame does not exist`, it is expected. The `joint_state_publisher_gui` node needs some time to start.
 
 ![DiffBot](diffbot.png)
 
-### 2. Start the DiffBot Example
+### 2. Start the DiffBot Robot
 Open a terminal, source your ROS 2 workspace, and execute the launch file:
 
 ```sh
-ros2 launch ros2_control_demo_example_2 diffbot.launch.py
+ros2 launch my_diffbot diffbot.launch.py
 ```
 
 This launch file loads and starts the robot hardware, controllers, and opens **RViz**. You should see an orange box in **RViz** if everything started properly.
@@ -124,7 +136,7 @@ Expected output:
 Hardware Component 1
         name: DiffBot
         type: system
-        plugin name: ros2_control_demo_example_2/DiffBotSystemHardware
+        plugin name: my_diffbot/DiffBotSystemHardware
         state: id=3 label=active
         command interfaces
                 left_wheel_joint/velocity [available] [claimed]
@@ -135,7 +147,7 @@ Hardware Component 1
 For testing without a real robot, restart the launch file with:
 
 ```sh
-ros2 launch ros2_control_demo_example_2 diffbot.launch.py use_mock_hardware:=True
+ros2 launch my_diffbot diffbot.launch.py use_mock_hardware:=True
 ```
 
 Check the hardware component again:
@@ -159,7 +171,7 @@ Hardware Component 1
 
 This confirms that the mock plugin was loaded. You can now test the setup with the same commands.
 
-## Files Used in This Demo
+## Files Used in This Source
 
 - **Launch file:** [`diffbot.launch.py`](https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/example_2/bringup/launch/diffbot.launch.py)
 - **Controllers YAML:** [`diffbot_controllers.yaml`](https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/example_2/bringup/config/diffbot_controllers.yaml)
@@ -169,7 +181,7 @@ This confirms that the mock plugin was loaded. You can now test the setup with t
 - **RViz configuration:** [`diffbot.rviz`](https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/ros2_control_demo_description/diffbot/rviz/diffbot.rviz)
 - **Hardware interface plugin:** [`diffbot_system.cpp`](https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/example_2/hardware/diffbot_system.cpp)
 
-## Controllers Used in This Demo
+## Controllers Used in This Source
 
 - **Joint State Broadcaster** ([ros2_controllers repo](https://github.com/ros-controls/ros2_controllers/tree/{REPOS_FILE_BRANCH}/joint_state_broadcaster))
 - **Diff Drive Controller** ([ros2_controllers repo](https://github.com/ros-controls/ros2_controllers/tree/{REPOS_FILE_BRANCH}/diff_drive_controller))
