@@ -29,11 +29,26 @@
 #include "rclcpp/time.hpp"
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
-
+#include "my_diffbot/driver_comms.hpp"
 namespace my_diffbot
 {
 class DiffBotSystemHardware : public hardware_interface::SystemInterface
 {
+
+struct Config {
+  double hw_start_sec;
+  double hw_stop_sec;
+  int  baud_rate = 0;
+  std::string left_wheel_name = "";
+  std::string right_wheel_name = "";
+  float loop_rate = 0.0;
+  int timeout = 0;
+  int encoder_counts_per_rev = 0;
+  std::string device = "";
+};
+
+
+
 public:
   RCLCPP_SHARED_PTR_DEFINITIONS(DiffBotSystemHardware);
 
@@ -59,6 +74,7 @@ private:
   // Parameters for the DiffBot simulation
   double hw_start_sec_;
   double hw_stop_sec_;
+  Config config_;
 };
 
 }  // namespace my_diffbot

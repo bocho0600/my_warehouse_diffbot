@@ -22,7 +22,7 @@
 #include <memory>
 #include <sstream>
 #include <vector>
-
+#include <linux/i2c-dev.h>
 #include "hardware_interface/lexical_casts.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/rclcpp.hpp"
@@ -39,12 +39,19 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init(
     return hardware_interface::CallbackReturn::ERROR;
   }
 
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  hw_start_sec_ =
-    hardware_interface::stod(info_.hardware_parameters["example_param_hw_start_duration_sec"]);
-  hw_stop_sec_ =
-    hardware_interface::stod(info_.hardware_parameters["example_param_hw_stop_duration_sec"]);
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
+  config_.hw_start_sec = hardware_interface::stod(info_.hardware_parameters["example_param_hw_start_duration_sec"]);
+  config_.hw_stop_sec = hardware_interface::stod(info_.hardware_parameters["example_param_hw_stop_duration_sec"]);
+  config_.baud_rate = std::stoi(info_.hardware_parameters["baud_rate"]);
+  config_.left_wheel_name = std::stod(info_.hardware_parameters["left_wheel_name"]);
+  config_.right_wheel_name = std::stod(info_.hardware_parameters["right_wheel_name"]);;
+  config_.loop_rate = std::stof(info_.hardware_parameters["loop_rate"]);;
+  config_.timeout = std::stoi(info_.hardware_parameters["timeout_ms"]);
+  config_.encoder_counts_per_rev = std::stoi(info_.hardware_parameters["enc_counts_per_rev"]);
+  
+  // TODO: Add the device parameter to the hardware_parameters in the URDF
+  //config_.device = "";
+
+
 
   for (const hardware_interface::ComponentInfo & joint : info_.joints)
   {
@@ -102,10 +109,10 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_configure(
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   RCLCPP_INFO(get_logger(), "Configuring ...please wait...");
 
-  for (int i = 0; i < hw_start_sec_; i++)
+  for (int i = 0; i < config_.hw_start_sec; i++)
   {
     rclcpp::sleep_for(std::chrono::seconds(1));
-    RCLCPP_INFO(get_logger(), "%.1f seconds left...", hw_start_sec_ - i);
+    RCLCPP_INFO(get_logger(), "%.1f seconds left...", config_.hw_start_sec - i);
   }
   // END: This part here is for exemplary purposes - Please do not copy to your production code
 
@@ -129,10 +136,10 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_activate(
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   RCLCPP_INFO(get_logger(), "Activating ...please wait...");
 
-  for (auto i = 0; i < hw_start_sec_; i++)
+  for (auto i = 0; i < config_.hw_start_sec; i++)
   {
     rclcpp::sleep_for(std::chrono::seconds(1));
-    RCLCPP_INFO(get_logger(), "%.1f seconds left...", hw_start_sec_ - i);
+    RCLCPP_INFO(get_logger(), "%.1f seconds left...", config_.hw_start_sec - i);
   }
   // END: This part here is for exemplary purposes - Please do not copy to your production code
 
@@ -153,10 +160,10 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_deactivate(
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   RCLCPP_INFO(get_logger(), "Deactivating ...please wait...");
 
-  for (auto i = 0; i < hw_stop_sec_; i++)
+  for (auto i = 0; i < config_.hw_stop_sec; i++)
   {
     rclcpp::sleep_for(std::chrono::seconds(1));
-    RCLCPP_INFO(get_logger(), "%.1f seconds left...", hw_stop_sec_ - i);
+    RCLCPP_INFO(get_logger(), "%.1f seconds left...", config_.hw_stop_sec - i);
   }
   // END: This part here is for exemplary purposes - Please do not copy to your production code
 
