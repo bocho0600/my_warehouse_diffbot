@@ -32,10 +32,8 @@ source install/setup.bash
 * [ros2_control differential drive (``diff_drive_controller``) contorllers](https://control.ros.org/jazzy/doc/ros2_control/doc/index.html)
 * [ros2_control differential drive example (example 2)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_2/doc/userdoc.html)
 * [ros2_control controllers-chaining example (example 12)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_12/doc/userdoc.html)
-
-* [ros2_control tutorials 1 (Youtube Channel)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_12/doc/userdoc.html)
-
-
+* [ros2_control tutorials 1 (Articulated Robotics)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_12/doc/userdoc.html)
+* [ros2_control tutorials 2 IMPORTANT!!! (Articulated Robotics)](https://www.youtube.com/watch?v=4QKsDf1c4hc&t=673s)
 
 
 # DiffBot
