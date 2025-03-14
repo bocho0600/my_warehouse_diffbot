@@ -1,37 +1,37 @@
 ## To install relevants ros2_control controllers packages:
 * Installing relevant controllers of the ``ros2_control`` framework:
-```sh
+```bash
 sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
 ```
-* Before you run the launch file, ensure ``joint_state_publisher_gui`` is installed:
-```sh
+* Before you run the launch file, ensure ``joint_state_publibasher_gui`` is installed:
+```bash
 sudo apt update
-sudo apt install ros-humble-joint-state-publisher-gui
+sudo apt install ros-humble-joint-state-publibasher-gui
 
 ```
 
 ## Source ROS2 Setup file to ENABLE ROS2:
-```sh
-source /opt/ros/humble/setup.bash
+```bash
+source /opt/ros/humble/setup.babash
 ```
 
 ## Build **diffbot** & **ros2_control_diffbot_description** Packages:
 Build everything with, continue to build if error occur:
-```sh
+```bash
 colcon build --symlink-install --continue-on-error
 ```
 Build my_diffbot package with:
-```sh 
+```bash 
 colcon build --packages-select my_diffbot
 ``` 
 Build robot_description package with:
-```sh 
+```bash 
 colcon build --packages-select ros2_control_diffbot_description
 ``` 
 
 ## Source & update environment for packages:
-``` sh
-source install/setup.bash
+``` bash
+source install/setup.babash
 ```
 
 ### This project is referenced from ros2_control example packages: 
@@ -45,14 +45,14 @@ source install/setup.bash
 
 ## Errors Handlers:
 ### Error 1: Packages missing dependencies when launch:
-```sh
+```babash
 [INFO] [launch]: All log files can be found below /home/kelvin_2204/.ros/log/2025-03-15-00-56-16-031066-BO-53805
 [INFO] [launch]: Default logging verbosity is set to INFO
 [ERROR] [launch]: Caught exception in launch (see debug for traceback): executable '[<launch.substitutions.text_substitution.TextSubstitution object at 0x7f6bb649b4f0>]' not found on the PATH
 ```
 
 Run ``rosdep`` to check and install missing dependencies
-```sh
+```bash
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
@@ -76,33 +76,33 @@ Refer to the [run_from_docker](../../doc/run_from_docker.rst) guide.
 ### 1. Check DiffBot Description
 To check if the **DiffBot** description is working properly, use the following launch command:
 
-```sh
+```bash
 ros2 launch my_diffbot view_robot.launch.py
 ```
 
-> **Warning:** If you see the message: `Warning: Invalid frame ID "odom" passed to canTransform argument target_frame - frame does not exist`, it is expected. The `joint_state_publisher_gui` node needs some time to start.
+> **Warning:** If you see the message: `Warning: Invalid frame ID "odom" passed to canTransform argument target_frame - frame does not exist`, it is expected. The `joint_state_publibasher_gui` node needs some time to start.
 
 ![DiffBot](diffbot.png)
 
 ### 2. Start the DiffBot Robot
 Open a terminal, source your ROS 2 workspace, and execute the launch file:
 
-```sh
+```bash
 ros2 launch my_diffbot diffbot.launch.py
 ```
 
-This launch file loads and starts the robot hardware, controllers, and opens **RViz**. You should see an orange box in **RViz** if everything started properly.
+This launch file loads and starts the robot hardware, controllers, and opens **RViz**. You bashould see an orange box in **RViz** if everything started properly.
 
 ### 3. Verify Hardware Interface
 In another terminal, check if the hardware interface loaded properly:
 
-```sh
+```bash
 ros2 control list_hardware_interfaces
 ```
 
 Expected output:
 
-```sh
+```bash
 command interfaces
       left_wheel_joint/velocity [available] [claimed]
       right_wheel_joint/velocity [available] [claimed]
@@ -116,13 +116,13 @@ state interfaces
 ### 4. Check Running Controllers
 Verify if the controllers are active:
 
-```sh
+```bash
 ros2 control list_controllers
 ```
 
 Expected output:
 
-```sh
+```bash
 diffbot_base_controller[diff_drive_controller/DiffDriveController] active
 joint_state_broadcaster[joint_state_broadcaster/JointStateBroadcaster] active
 ```
@@ -130,7 +130,7 @@ joint_state_broadcaster[joint_state_broadcaster/JointStateBroadcaster] active
 ### 5. Send Movement Commands
 You can send a velocity command to **DiffBot** using ROS 2 CLI:
 
-```sh
+```bash
 ros2 topic pub --rate 10 /cmd_vel geometry_msgs/msg/TwistStamped "
 twist:
   linear:
@@ -143,18 +143,18 @@ twist:
     z: 1.0"
 ```
 
-This should make the orange box move in **RViz**.
+This bashould make the orange box move in **RViz**.
 
 ### 6. Inspect the Hardware Component
 To list hardware components:
 
-```sh
+```bash
 ros2 control list_hardware_components
 ```
 
 Expected output:
 
-```sh
+```bash
 Hardware Component 1
         name: DiffBot
         type: system
@@ -168,19 +168,19 @@ Hardware Component 1
 ### 7. Run with Mock Hardware
 For testing without a real robot, restart the launch file with:
 
-```sh
+```bash
 ros2 launch my_diffbot diffbot.launch.py use_mock_hardware:=True
 ```
 
 Check the hardware component again:
 
-```sh
+```bash
 ros2 control list_hardware_components
 ```
 
 Expected output:
 
-```sh
+```bash
 Hardware Component 1
     name: DiffBot
     type: system
