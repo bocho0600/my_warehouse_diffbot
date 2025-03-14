@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 set(PROJECT_NAME my_diffbot)
 
 # Project name and language
-project(${PROJECT_NAME})
+project(${PROJECT_NAME} LANGUAGES CXX)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
   add_compile_options(-Wall -Wextra)
@@ -20,16 +20,9 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   rclcpp_lifecycle
 )
 
-# Specify the required version of ros2_control
-find_package(controller_manager 4.0.0)
-# Handle the case where the required version is not found
-if(NOT controller_manager_FOUND)
-  message(FATAL_ERROR "ros2_control version 4.0.0 or higher is required. "
-  "Are you using the correct branch of the ros2_control_demos repository?")
-endif()
 find_package(hardware_interface REQUIRED)
 # find dependencies
-find_package(backward_ros REQUIRED)
+find_package(backward_ros REQUIRED)  
 find_package(ament_cmake REQUIRED)
 foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
   find_package(${Dependency} REQUIRED)
@@ -37,6 +30,7 @@ endforeach()
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(pluginlib REQUIRED)
+
 ## COMPILE
 add_library(
   my_diffbot
