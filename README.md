@@ -1,4 +1,5 @@
 ## To install relevants ros2_control controllers packages:
+* Installing relevant controllers of the ``ros2_control`` framework:
 ```sh
 sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
 ```
