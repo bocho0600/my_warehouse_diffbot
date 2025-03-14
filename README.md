@@ -43,6 +43,20 @@ source install/setup.bash
 * [ros2_control tutorials 2 IMPORTANT!!! (Articulated Robotics)](https://www.youtube.com/watch?v=4QKsDf1c4hc&t=673s)
 
 
+# Errors Handlers:
+* Error 1:
+```sh
+[INFO] [launch]: All log files can be found below /home/kelvin_2204/.ros/log/2025-03-15-00-56-16-031066-BO-53805
+[INFO] [launch]: Default logging verbosity is set to INFO
+[ERROR] [launch]: Caught exception in launch (see debug for traceback): executable '[<launch.substitutions.text_substitution.TextSubstitution object at 0x7f6bb649b4f0>]' not found on the PATH
+```
+
+Run ``rosdep`` to check and install missing dependencies
+```sh
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+
 # DiffBot
 
 **DiffBot**, or "Differential Mobile Robot," is a simple mobile base with differential drive.
