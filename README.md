@@ -44,7 +44,7 @@ source install/setup.bash
 
 
 # Errors Handlers:
-* Error 1:
+## Error 1: Packages missing dependencies when launch:
 ```sh
 [INFO] [launch]: All log files can be found below /home/kelvin_2204/.ros/log/2025-03-15-00-56-16-031066-BO-53805
 [INFO] [launch]: Default logging verbosity is set to INFO
