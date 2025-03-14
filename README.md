@@ -2,6 +2,12 @@
 ```sh
 sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
 ```
+* Before you run the launch file, ensure ``joint_state_publisher_gui`` is installed:
+```sh
+sudo apt update
+sudo apt install ros-humble-joint-state-publisher-gui
+
+```
 
 ## Source ROS2 Setup file to ENABLE ROS2:
 ```sh
