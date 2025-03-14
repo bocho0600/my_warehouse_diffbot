@@ -16,10 +16,10 @@ public:
       I2CInterface(const std::string &i2c_bus, uint8_t addr)
           : addr_(addr), prev_left_speed_(0), prev_right_speed_(0)
       {
-            bus_fd_ = open(i2c_bus.c_str(), O_RDWR);
+            bus_fd_ = open(i2c_bus.c_str(), O_RDWR); // Open the I2C bus
             if (bus_fd_ < 0)
             {
-                  throw std::runtime_error("Failed to open I2C bus");
+                  throw std::runtime_error("Failed to open I2C bus"); 
             }
             if (ioctl(bus_fd_, I2C_SLAVE, addr_) < 0) // Set the I2C slave address
             {
@@ -64,12 +64,12 @@ public:
       {
             if (number < 1 || number > 2 || speed < 0 || speed > 255)
             {
-                  std::cerr << "Invalid DC motor parameters\n";
+                  std::cerr << "Invalid DC motor parameters\n"; // Print an error message
                   return;
             }
             if (direction != "0" && direction != "1" && direction != "S")
             {
-                  std::cerr << "Invalid DC motor direction\n";
+                  std::cerr << "Invalid DC motor direction\n"; // Print an error message
                   return;
             }
             writeCommand("M" + std::to_string(number) + " " + direction + " " + std::to_string(speed));
