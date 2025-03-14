@@ -22,7 +22,7 @@
 #include <memory>
 #include <sstream>
 #include <vector>
-#include <linux/i2c-dev.h>
+
 #include "hardware_interface/lexical_casts.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/rclcpp.hpp"
@@ -38,20 +38,19 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init(
   {
     return hardware_interface::CallbackReturn::ERROR;
   }
+  logger_ = std::make_shared<rclcpp::Logger>(
+    rclcpp::get_logger("controller_manager.resource_manager.hardware_component.system.DiffBot"));
+  clock_ = std::make_shared<rclcpp::Clock>(rclcpp::Clock());
 
-  config_.hw_start_sec = hardware_interface::stod(info_.hardware_parameters["example_param_hw_start_duration_sec"]);
-  config_.hw_stop_sec = hardware_interface::stod(info_.hardware_parameters["example_param_hw_stop_duration_sec"]);
-  config_.baud_rate = std::stoi(info_.hardware_parameters["baud_rate"]);
-  config_.left_wheel_name = std::stod(info_.hardware_parameters["left_wheel_name"]);
-  config_.right_wheel_name = std::stod(info_.hardware_parameters["right_wheel_name"]);;
-  config_.loop_rate = std::stof(info_.hardware_parameters["loop_rate"]);;
-  config_.timeout = std::stoi(info_.hardware_parameters["timeout_ms"]);
-  config_.encoder_counts_per_rev = std::stoi(info_.hardware_parameters["enc_counts_per_rev"]);
-  
-  // TODO: Add the device parameter to the hardware_parameters in the URDF
-  //config_.device = "";
-
-
+  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
+  hw_start_sec_ =
+    hardware_interface::stod(info_.hardware_parameters["example_param_hw_start_duration_sec"]);
+  hw_stop_sec_ =
+    hardware_interface::stod(info_.hardware_parameters["example_param_hw_stop_duration_sec"]);
+  // END: This part here is for exemplary purposes - Please do not copy to your production code
+  hw_positions_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
+  hw_velocities_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
+  hw_commands_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
 
   for (const hardware_interface::ComponentInfo & joint : info_.joints)
   {
@@ -103,31 +102,30 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init(
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-hardware_interface::CallbackReturn DiffBotSystemHardware::on_configure(
-  const rclcpp_lifecycle::State & /*previous_state*/)
+std::vector<hardware_interface::StateInterface> DiffBotSystemHardware::export_state_interfaces()
 {
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  RCLCPP_INFO(get_logger(), "Configuring ...please wait...");
-
-  for (int i = 0; i < config_.hw_start_sec; i++)
+  std::vector<hardware_interface::StateInterface> state_interfaces;
+  for (auto i = 0u; i < info_.joints.size(); i++)
   {
-    rclcpp::sleep_for(std::chrono::seconds(1));
-    RCLCPP_INFO(get_logger(), "%.1f seconds left...", config_.hw_start_sec - i);
+    state_interfaces.emplace_back(hardware_interface::StateInterface(
+      info_.joints[i].name, hardware_interface::HW_IF_POSITION, &hw_positions_[i]));
+    state_interfaces.emplace_back(hardware_interface::StateInterface(
+      info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &hw_velocities_[i]));
   }
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
 
-  // reset values always when configuring hardware
-  for (const auto & [name, descr] : joint_state_interfaces_)
-  {
-    set_state(name, 0.0);
-  }
-  for (const auto & [name, descr] : joint_command_interfaces_)
-  {
-    set_command(name, 0.0);
-  }
-  RCLCPP_INFO(get_logger(), "Successfully configured!");
+  return state_interfaces;
+}
 
-  return hardware_interface::CallbackReturn::SUCCESS;
+std::vector<hardware_interface::CommandInterface> DiffBotSystemHardware::export_command_interfaces()
+{
+  std::vector<hardware_interface::CommandInterface> command_interfaces;
+  for (auto i = 0u; i < info_.joints.size(); i++)
+  {
+    command_interfaces.emplace_back(hardware_interface::CommandInterface(
+      info_.joints[i].name, hardware_interface::HW_IF_VELOCITY, &hw_commands_[i]));
+  }
+
+  return command_interfaces;
 }
 
 hardware_interface::CallbackReturn DiffBotSystemHardware::on_activate(
@@ -136,17 +134,22 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_activate(
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   RCLCPP_INFO(get_logger(), "Activating ...please wait...");
 
-  for (auto i = 0; i < config_.hw_start_sec; i++)
+  for (auto i = 0; i < hw_start_sec_; i++)
   {
     rclcpp::sleep_for(std::chrono::seconds(1));
-    RCLCPP_INFO(get_logger(), "%.1f seconds left...", config_.hw_start_sec - i);
+    RCLCPP_INFO(get_logger(), "%.1f seconds left...", hw_start_sec_ - i);
   }
   // END: This part here is for exemplary purposes - Please do not copy to your production code
 
-  // command and state should be equal when starting
-  for (const auto & [name, descr] : joint_command_interfaces_)
+  // set some default values
+  for (auto i = 0u; i < hw_positions_.size(); i++)
   {
-    set_command(name, get_state(name));
+    if (std::isnan(hw_positions_[i]))
+    {
+      hw_positions_[i] = 0;
+      hw_velocities_[i] = 0;
+      hw_commands_[i] = 0;
+    }
   }
 
   RCLCPP_INFO(get_logger(), "Successfully activated!");
@@ -160,10 +163,10 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_deactivate(
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   RCLCPP_INFO(get_logger(), "Deactivating ...please wait...");
 
-  for (auto i = 0; i < config_.hw_stop_sec; i++)
+  for (auto i = 0; i < hw_stop_sec_; i++)
   {
     rclcpp::sleep_for(std::chrono::seconds(1));
-    RCLCPP_INFO(get_logger(), "%.1f seconds left...", config_.hw_stop_sec - i);
+    RCLCPP_INFO(get_logger(), "%.1f seconds left...", hw_stop_sec_ - i);
   }
   // END: This part here is for exemplary purposes - Please do not copy to your production code
 
@@ -178,21 +181,18 @@ hardware_interface::return_type DiffBotSystemHardware::read(
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   std::stringstream ss;
   ss << "Reading states:";
-  ss << std::fixed << std::setprecision(2);
-  for (const auto & [name, descr] : joint_state_interfaces_)
+  for (std::size_t i = 0; i < hw_velocities_.size(); i++)
   {
-    if (descr.get_interface_name() == hardware_interface::HW_IF_POSITION)
-    {
-      // Simulate DiffBot wheels's movement as a first-order system
-      // Update the joint status: this is a revolute joint without any limit.
-      // Simply integrates
-      auto velo = get_command(descr.get_prefix_name() + "/" + hardware_interface::HW_IF_VELOCITY);
-      set_state(name, get_state(name) + period.seconds() * velo);
+    // Simulate DiffBot wheels's movement as a first-order system
+    // Update the joint status: this is a revolute joint without any limit.
+    // Simply integrates
+    hw_positions_[i] = hw_positions_[i] + period.seconds() * hw_velocities_[i];
 
-      ss << std::endl
-         << "\t position " << get_state(name) << " and velocity " << velo << " for '" << name
-         << "'!";
-    }
+    ss << std::fixed << std::setprecision(2) << std::endl
+       << "\t"
+          "position "
+       << hw_positions_[i] << " and velocity " << hw_velocities_[i] << " for '"
+       << info_.joints[i].name.c_str() << "'!";
   }
   RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 500, "%s", ss.str().c_str());
   // END: This part here is for exemplary purposes - Please do not copy to your production code
@@ -206,13 +206,13 @@ hardware_interface::return_type my_diffbot ::DiffBotSystemHardware::write(
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   std::stringstream ss;
   ss << "Writing commands:";
-  for (const auto & [name, descr] : joint_command_interfaces_)
+  for (auto i = 0u; i < hw_commands_.size(); i++)
   {
     // Simulate sending commands to the hardware
-    set_state(name, get_command(name));
+    hw_velocities_[i] = hw_commands_[i];
 
     ss << std::fixed << std::setprecision(2) << std::endl
-       << "\t" << "command " << get_command(name) << " for '" << name << "'!";
+       << "\t" << "command " << hw_commands_[i] << " for '" << info_.joints[i].name.c_str() << "'!";
   }
   RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 500, "%s", ss.str().c_str());
   // END: This part here is for exemplary purposes - Please do not copy to your production code
