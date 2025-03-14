@@ -1,11 +1,11 @@
 ## To install relevants ros2_control controllers packages:
 ```sh
-sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers
+sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
 ```
 
 ## Source ROS2 Setup file to ENABLE ROS2:
 ```sh
-source /opt/ros/jazzy/setup.bash
+source /opt/ros/humble/setup.bash
 ```
 
 ## Build **diffbot** & **ros2_control_diffbot_description** Packages:
@@ -28,11 +28,11 @@ source install/setup.bash
 ```
 
 ### This project is referenced from ros2_control example packages: 
-* [ros2_control framework information](https://control.ros.org/jazzy/doc/ros2_control/doc/index.html)
-* [ros2_control differential drive (``diff_drive_controller``) contorllers](https://control.ros.org/jazzy/doc/ros2_control/doc/index.html)
-* [ros2_control differential drive example (example 2)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_2/doc/userdoc.html)
-* [ros2_control controllers-chaining example (example 12)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_12/doc/userdoc.html)
-* [ros2_control tutorials 1 (Articulated Robotics)](https://control.ros.org/jazzy/doc/ros2_control_demos/example_12/doc/userdoc.html)
+* [ros2_control framework information](https://control.ros.org/humble/doc/ros2_control/doc/index.html)
+* [ros2_control differential drive (``diff_drive_controller``) contorllers](https://control.ros.org/humble/doc/ros2_control/doc/index.html)
+* [ros2_control differential drive example (example 2)](https://control.ros.org/humble/doc/ros2_control_demos/example_2/doc/userdoc.html)
+* [ros2_control controllers-chaining example (example 12)](https://control.ros.org/humble/doc/ros2_control_demos/example_12/doc/userdoc.html)
+* [ros2_control tutorials 1 (Articulated Robotics)](https://control.ros.org/humble/doc/ros2_control_demos/example_12/doc/userdoc.html)
 * [ros2_control tutorials 2 IMPORTANT!!! (Articulated Robotics)](https://www.youtube.com/watch?v=4QKsDf1c4hc&t=673s)
 
 
