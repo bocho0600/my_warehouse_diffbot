@@ -3,7 +3,7 @@
 ```bash
 sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
 ```
-* Before you run the launch file, ensure ``joint_state_publibasher_gui`` is installed:
+* Before you run the launch file, ensure ``joint_state_publisher_gui`` is installed:
 ```bash
 sudo apt update
 sudo apt install ros-humble-joint-state-publibasher-gui
