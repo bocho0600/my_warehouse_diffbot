@@ -85,7 +85,7 @@ ros2 launch my_diffbot view_robot.launch.py
 <div style="display: flex; align-items: center;">
   <img src="control/doc/diffbot1.png" alt="DiffBot" width="200"/>
   <img src="control/doc/diffbot2.png" alt="DiffBot" width="350"/>
-  <img src="control/doc/diffbot3.png" alt="DiffBot" width="400"/>
+  <img src="control/doc/diffbot3.png" alt="DiffBot" width="300"/>
 </div>
 
 
