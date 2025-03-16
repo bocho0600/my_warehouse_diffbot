@@ -82,7 +82,9 @@ ros2 launch my_diffbot view_robot.launch.py
 
 > **Warning:** If you see the message: `Warning: Invalid frame ID "odom" passed to canTransform argument target_frame - frame does not exist`, it is expected. The `joint_state_publibasher_gui` node needs some time to start.
 
-![DiffBot](diffbot.png)
+![DiffBot](doc/diffbot1.png) ![DiffBot](doc/diffbot2.png) ![DiffBot](doc/diffbot3.png)
+
+
 
 ### 2. Start the DiffBot Robot
 Open a terminal, source your ROS 2 workspace, and execute the launch file:
