@@ -12,7 +12,7 @@ sudo apt install ros-humble-joint-state-publibasher-gui
 
 ## Source ROS2 Setup file to ENABLE ROS2:
 ```bash
-source /opt/ros/humble/setup.babash
+source /opt/ros/humble/setup.bash
 ```
 
 ## Build **diffbot** & **ros2_control_diffbot_description** Packages:
@@ -31,7 +31,7 @@ colcon build --packages-select ros2_control_diffbot_description
 
 ## Source & update environment for packages:
 ``` bash
-source install/setup.babash
+source install/setup.bash
 ```
 
 ### This project is referenced from ros2_control example packages: 
@@ -45,7 +45,7 @@ source install/setup.babash
 
 ## Errors Handlers:
 ### Error 1: Packages missing dependencies when launch:
-```babash
+```bash
 [INFO] [launch]: All log files can be found below /home/kelvin_2204/.ros/log/2025-03-15-00-56-16-031066-BO-53805
 [INFO] [launch]: Default logging verbosity is set to INFO
 [ERROR] [launch]: Caught exception in launch (see debug for traceback): executable '[<launch.substitutions.text_substitution.TextSubstitution object at 0x7f6bb649b4f0>]' not found on the PATH

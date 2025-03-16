@@ -75,6 +75,10 @@ def generate_launch_description():
         executable="ros2_control_node",
         parameters=[robot_controllers],
         output="both",
+        remappings=[
+            ("~/robot_description", "/robot_description"),
+            ("/diffbot_base_controller/cmd_vel", "/cmd_vel"),
+        ],
     )
     robot_state_pub_node = Node(
         package="robot_state_publisher",
@@ -94,19 +98,13 @@ def generate_launch_description():
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["joint_state_broadcaster"],
+        arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
     )
 
     robot_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=[
-            "diffbot_base_controller",
-            "--param-file",
-            robot_controllers,
-            "--controller-ros-args",
-            "-r /diffbot_base_controller/cmd_vel:=/cmd_vel",
-        ],
+        arguments=["diffbot_base_controller", "--controller-manager", "/controller_manager"],
     )
 
     # Delay rviz start after `joint_state_broadcaster`
@@ -116,7 +114,6 @@ def generate_launch_description():
             on_exit=[rviz_node],
         )
     )
-
     # Delay start of joint_state_broadcaster after `robot_controller`
     # TODO(anyone): This is a workaround for flaky tests. Remove when fixed.
     delay_joint_state_broadcaster_after_robot_controller_spawner = RegisterEventHandler(

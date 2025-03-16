@@ -18,7 +18,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "my_diffbot/driver_comms.hpp"
+
 #include "hardware_interface/handle.hpp"
 #include "hardware_interface/hardware_info.hpp"
 #include "hardware_interface/system_interface.hpp"
