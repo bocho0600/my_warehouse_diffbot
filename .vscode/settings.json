@@ -71,5 +71,5 @@
             "typeinfo": "cpp",
             "variant": "cpp"
       },
-      "cmake.sourceDirectory": "/home/kelvin_2204/ros2_ws/src/my_warehouse_diffbot/control"
+      "cmake.sourceDirectory": "/home/kelvin_2204/control_ws/src/my_warehouse_diffbot/control"
 }

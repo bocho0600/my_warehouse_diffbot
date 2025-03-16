@@ -13,7 +13,7 @@
   <xacro:property name="wheel_len" value="0.018" />
   <xacro:property name="wheel_radius" value="0.021" />
   <xacro:property name="caster_wheel_mass" value="0.1" /> <!-- arbitrary value for caster wheel mass -->
-  <xacro:property name="caster_wheel_radius" value="0.021" />
+  <xacro:property name="caster_wheel_radius" value="${0.018}" />
   <xacro:property name="z_offset" value="-${base_height/2 - 0.01}" /> <!-- Space btw top of beam and the each joint -->
 
   <!-- Base Link -->
@@ -66,7 +66,7 @@
         <geometry>
           <cylinder length="${wheel_len}" radius="${wheel_radius}"/>
         </geometry>
-        <material name="black"/>
+        <material name="grey"/>
       </visual>
 
       <inertial>
@@ -102,7 +102,7 @@
         <geometry>
           <cylinder length="${wheel_len}" radius="${wheel_radius}"/>
         </geometry>
-        <material name="black"/>
+        <material name="grey"/>
       </visual>
 
       <inertial>
